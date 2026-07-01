@@ -1,6 +1,5 @@
 from openai import OpenAI
-from .config import settings
-
+from arhamos.core.config import settings
 
 class LLMClient:
     def __init__(self):

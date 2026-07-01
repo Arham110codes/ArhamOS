@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arhamos"
+version = "0.1.0"
+description = "Local AI Engineering Platform"
+authors = [
+    { name = "Arham Oberoi", email = "arhamoberoi@gmail.com" }
+]
+requires-python = ">=3.11"
+
+dependencies = [
+    "openai",
+    "rich",
+    "python-dotenv",
+    "pydantic",
+    "pydantic-settings"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
