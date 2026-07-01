@@ -3,30 +3,34 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent / "src"))
 
+from cli.menu import display_menu
 from rich.console import Console
-from core.llm import LLMClient
 
 console = Console()
 
 
-def banner():
-    console.rule("[bold cyan]ArhamOS v0.1[/bold cyan]")
-
-
 def main():
-    banner()
 
-    console.print("[green]✓ Configuration Loaded[/green]")
-    console.print("[green]✓ Ollama Connected[/green]\n")
+    while True:
 
-    llm = LLMClient()
+        choice = display_menu()
 
-    response = llm.ask(
-        "Introduce yourself to Arham in exactly two sentences."
-    )
+        if choice == "1":
+            console.print("\n[cyan]LeetCode Engine (Coming Next Step)[/cyan]")
+            input("\nPress Enter to continue...")
 
-    console.print(response)
+        elif choice == "2":
+            console.print("\n[cyan]Code Explainer (Coming Soon)[/cyan]")
+            input("\nPress Enter to continue...")
 
+        elif choice == "3":
+            console.print("\nGoodbye Arham 👋")
+            break
+
+        else:
+            console.print("\n[red]Invalid choice[/red]")
+            input("\nPress Enter...")
+            
 
 if __name__ == "__main__":
     main()
