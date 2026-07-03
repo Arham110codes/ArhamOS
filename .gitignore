@@ -36,3 +36,22 @@ build/
 
 # Temporary
 temp/
+
+# ArhamOS Browser Profile
+user_data/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Local Database (future)
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+Desktop.ini

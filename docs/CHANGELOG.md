@@ -87,3 +87,10 @@ Status: In Development
 ## Release Philosophy
 
 Each release must complete one workflow rather than partially implementing multiple workflows.
+
+## LeetCode Automation
+
+- Migrated to workflow-based architecture.
+- Implemented CDP browser attachment.
+- Implemented Monaco editor detection.
+- Implemented automatic Java code injection.

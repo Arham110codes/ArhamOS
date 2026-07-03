@@ -1,41 +1,52 @@
 from rich.console import Console
+
 from arhamos.core.llm import LLMClient
 
 console = Console()
 
 
 class LeetCodeSkill:
+
     def __init__(self):
         self.llm = LLMClient()
 
-    def solve_problem(self):
-        console.print("\n[bold cyan]LeetCode Learning Engine[/bold cyan]\n")
+    def solve_problem(self, problem: dict) -> str:
 
-        problem = console.input(
-            "[bold green]Paste the problem statement:[/bold green]\n\n"
+        console.print(
+            f"\n[bold cyan]{problem['title']}[/bold cyan]"
         )
 
-        console.print("\n[bold yellow]Thinking...[/bold yellow]\n")
+        console.print(
+            f"[yellow]{problem['difficulty']}[/yellow]\n"
+        )
+
+        console.print(
+            "[bold yellow]Thinking...[/bold yellow]\n"
+        )
 
         prompt = f"""
-You are an expert competitive programmer.
+You are an ICPC World Finalist and Senior Software Engineer.
 
 Solve the following LeetCode problem.
 
-Return:
+Return ONLY the complete Java solution.
 
-1. Intuition
-2. Brute Force Approach
-3. Optimal Approach
-4. Java Solution
-5. Time Complexity
-6. Space Complexity
+Do not include:
+- Explanation
+- Markdown
+- Code fences
+- Complexity analysis
 
-Problem:
+Problem Title:
+{problem["title"]}
 
-{problem}
+Difficulty:
+{problem["difficulty"]}
+
+Problem Statement:
+{problem["statement"]}
 """
 
         response = self.llm.ask(prompt)
 
-        console.print(response)
+        return response.strip()

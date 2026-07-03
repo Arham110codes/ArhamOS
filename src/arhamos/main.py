@@ -1,7 +1,7 @@
 from rich.console import Console
 
 from arhamos.cli.menu import display_menu
-from arhamos.workflows.leetcode import LeetCodeWorkflow
+from arhamos.workflows.leetcode_workflow import LeetCodeWorkflow
 
 console = Console()
 
