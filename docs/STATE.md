@@ -40,8 +40,6 @@ Complete the LeetCode workflow end-to-end before starting any other workflow.
 
 ## Browser Automation
 
-## Browser Automation
-
 - [x] Playwright installed
 - [x] BrowserService implemented
 - [x] CDP browser attachment
@@ -50,9 +48,9 @@ Complete the LeetCode workflow end-to-end before starting any other workflow.
 - [x] Problem extraction
 - [x] Monaco editor detection
 - [x] Automatic code injection
-- [ ] Automatic language switching
-- [ ] Run execution
-- [ ] Execution result extraction
+- [x] Automatic Run execution
+- [x] Test case execution
+- [ ] Result parsing
 - [ ] Automatic submission (user approval required)
 - [ ] Verdict extraction
 - [ ] Markdown report generation

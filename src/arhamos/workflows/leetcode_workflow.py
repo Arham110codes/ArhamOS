@@ -4,6 +4,7 @@ from arhamos.tools.browser import BrowserService
 from arhamos.tools.leetcode_page import LeetCodePage
 from arhamos.tools.editor import LeetCodeEditor
 from arhamos.skills.leetcode import LeetCodeSkill
+from arhamos.tools.result import ResultReader
 
 console = Console()
 
@@ -42,6 +43,15 @@ class LeetCodeWorkflow:
         console.print("\n[yellow]Injecting solution...[/yellow]")
 
         editor.set_code(solution)
+        result = ResultReader(browser.page)
+
+        console.print(
+            "\n[yellow]Running solution...[/yellow]"
+        )
+
+        result.click_run()
+
+        result.wait_for_completion()
 
         console.print(
             "\n[green]Done. Review the solution before submitting.[/green]"
