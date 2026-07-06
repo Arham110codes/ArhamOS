@@ -1,5 +1,7 @@
 from playwright.sync_api import Page
 
+from arhamos.models.result import ExecutionResult
+
 
 class ResultReader:
 
@@ -23,3 +25,16 @@ class ResultReader:
         self.page.wait_for_timeout(3000)
 
         print("✓ Execution finished")
+
+    def read_result(self) -> ExecutionResult:
+
+        # Temporary placeholder.
+        # Next step we'll replace this with real parsing.
+
+        return ExecutionResult(
+            status="UNKNOWN",
+            runtime="",
+            memory="",
+            passed="",
+            total="",
+        )

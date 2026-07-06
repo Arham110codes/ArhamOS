@@ -1,354 +1,322 @@
-# DECISIONS.md
+# Engineering Decisions
 
-# ArhamOS Architectural Decisions
+This document records significant architectural decisions made during the development of ArhamOS.
 
-Status: ACTIVE
-
-Purpose:
-This document records all major architectural and engineering decisions made during the development of ArhamOS.
-
-Once a decision is marked as **Frozen**, it should not be revisited unless there is a critical technical reason.
+Its purpose is to explain **why** decisions were made, preventing future contributors from unintentionally reversing deliberate engineering choices.
 
 ---
 
 # Decision 001
 
-Title
+## Modular Architecture
 
-Workflow-First Development
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+Separate the platform into independent modules.
 
-ArhamOS will be developed by completing one end-to-end workflow at a time rather than building isolated AI agents.
+```
+Core
+Config
+Models
+Memory
+Skills
+Tools
+Utilities
+Workflows
+```
 
-Reason
+### Rationale
 
-Complete workflows deliver usable functionality much earlier and ensure every component is exercised in a real-world scenario.
+- Better maintainability
+- Independent testing
+- Easier extension
+- Lower coupling
 
 ---
 
 # Decision 002
 
-Title
+## Browser Automation via CDP
 
-Local-First AI
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+Use Microsoft Edge with Chrome DevTools Protocol instead of launching Playwright-managed browsers.
 
-Primary inference will use Ollama with local language models.
+### Rationale
+
+Benefits
+
+- Persistent login sessions
+- Reduced authentication issues
+- Browser reuse
+- Stable debugging
+- Better real-world behaviour
+
+Rejected Alternative
+
+- Fresh Playwright browser instances
 
 Reason
 
-Privacy, offline capability, lower operating cost, and independence from cloud APIs.
-
-Current Model
-
-Qwen3:8B
+Authentication failures and browser detection.
 
 ---
 
 # Decision 003
 
-Title
+## Manual Authentication
 
-Workflow Completion Strategy
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+Never automate login.
 
-A workflow must be completed before beginning another workflow.
+Users authenticate manually once.
 
-Reason
+ArhamOS attaches to the existing authenticated browser.
 
-Avoids accumulating partially implemented features and reduces technical debt.
+### Rationale
 
-Current Workflow
-
-LeetCode Automation
+- Simpler implementation
+- More reliable
+- Avoids login failures
+- Reduces maintenance
 
 ---
 
 # Decision 004
 
-Title
+## Skills / Tools Separation
 
-Browser Automation Framework
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+High-level reasoning belongs to Skills.
 
-Browser automation uses Playwright.
+Execution belongs to Tools.
 
-Reason
+### Example
 
-Cross-platform support, stability, modern API, and strong automation capabilities.
+```
+Skill
+
+↓
+
+Browser Tool
+
+↓
+
+Editor Tool
+
+↓
+
+Result Tool
+```
+
+### Rationale
+
+Skills remain reusable.
+
+Tools remain deterministic.
 
 ---
 
 # Decision 005
 
-Title
+## Workflow Orchestration
 
-Human Approval Policy
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+Workflows coordinate complete execution.
 
-ArhamOS must never automatically perform irreversible actions.
+Skills should never directly coordinate browser operations.
 
-Examples
+### Rationale
 
-- Code submission
-- Repository deletion
-- Account changes
-- Financial transactions
+Improves modularity.
 
-The user always provides the final approval.
+Allows multiple workflows to reuse the same skill.
 
 ---
 
 # Decision 006
 
-Title
+## LLM Abstraction
 
-Project Structure
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+All language model providers are accessed through a common interface.
 
-Application code exists only inside
+### Benefits
 
-src/arhamos
-
-Reason
-
-Maintainability, packaging compatibility, and scalability.
+- Provider independence
+- Easier experimentation
+- Future routing
+- Better testing
 
 ---
 
 # Decision 007
 
-Title
+## Selector Registry
 
-Dedicated Automation Browser
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+Store DOM selectors inside:
 
-ArhamOS uses its own browser profile for automation.
+```
+config/selectors.py
+```
 
-Personal browsing remains separate.
+### Rationale
 
-Reason
+LeetCode changes frequently.
 
-Stable automation and isolated sessions.
+Updating one file is preferable to modifying selectors throughout the project.
 
 ---
 
 # Decision 008
 
-Title
+## Browser Layer Freeze
 
-Reusable Browser Service
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+After stable browser automation is achieved, browser architecture should remain stable.
 
-All browser interactions must use BrowserService.
+Future work should focus on reasoning rather than browser engineering.
 
-Reason
+### Rationale
 
-Avoid duplicated browser management logic.
+Avoid unnecessary regressions.
 
 ---
 
 # Decision 009
 
-Title
+## Documentation First Releases
 
-Reusable Workflow Engine
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+A release is not complete until:
 
-Every automation is implemented as a Workflow.
+- Documentation updated
+- State updated
+- Commit created
+- Tag created
 
-Reason
+### Rationale
 
-Ensures consistency, modularity, and reusability.
+Documentation is considered part of the software rather than an afterthought.
 
 ---
 
 # Decision 010
 
-Title
+## Canonical Engineering Specification
 
-Skill Isolation
+### Status
 
-Status
+Accepted
 
-FROZEN
+### Decision
 
-Decision
+ENGINEERING_SPEC.md is the single source of truth.
 
-Skills perform one responsibility only.
+All other documents derive from it.
 
-Skills never interact directly with the user.
+### Hierarchy
 
-Reason
+```
+ENGINEERING_SPEC.md
 
-Loose coupling and improved testability.
+↓
 
----
+README
 
-# Decision 011
+↓
 
-Title
+HANDOFF
 
-CLI Responsibility
+↓
 
-Status
+PROJECT
 
-FROZEN
+↓
 
-Decision
+ARCHITECTURE
 
-The CLI is responsible only for user interaction.
+↓
 
-Business logic belongs inside workflows.
+STATE
 
-Reason
+↓
 
-Separation of concerns.
+DECISIONS
 
----
+↓
 
-# Decision 012
+CHANGELOG
 
-Title
+↓
 
-Documentation Strategy
+LLM_CONTEXT
+```
 
-Status
+### Rationale
 
-FROZEN
+Maintains consistency.
 
-Decision
-
-Project knowledge is maintained using:
-
-- LLM_CONTEXT.md
-- PROJECT.md
-- ARCHITECTURE.md
-- STATE.md
-- CHANGELOG.md
-- DECISIONS.md
-
-Reason
-
-Allows any capable LLM to resume development with minimal context loss.
+Prevents contradictory documentation.
 
 ---
 
-# Decision 013
+# Future ADRs
 
-Title
+As ArhamOS grows, this document may be split into individual Architecture Decision Records (ADRs).
 
-Development Philosophy
+Example
 
-Status
+```
+docs/adr/
 
-FROZEN
+0001-modular-architecture.md
 
-Decision
+0002-cdp-browser.md
 
-Every commit must move the active workflow closer to completion.
-
-Reason
-
-Maximize visible progress and avoid unnecessary infrastructure work.
-
----
-
-# Decision 014
-
-Title
-
-Coding Standards
-
-Status
-
-FROZEN
-
-Decision
-
-- Small commits
-- Modular code
-- Single Responsibility Principle
-- Type hints where practical
-- No duplicated logic
-- Composition over inheritance
-- Production-quality code
-
-Reason
-
-Long-term maintainability.
-
----
-
-# Decision 015
-
-Title
-
-Architecture Stability
-
-Status
-
-FROZEN
-
-Decision
-
-Architecture should not be redesigned during feature development.
-
-Only critical technical issues justify architectural changes.
-
-Reason
-
-Maintain development velocity and reduce unnecessary refactoring.
-
----
-
-# Future Decisions
-
-Every new architectural decision must be recorded here using the same format.
-
-This file is considered the source of truth for all architectural choices made during the lifetime of ArhamOS.
+0003-selector-registry.md
+```

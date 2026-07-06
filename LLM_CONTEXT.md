@@ -1,442 +1,438 @@
-# LLM_CONTEXT.md
+# LLM Context
 
-# ArhamOS - AI Continuation Context
+---
 
-Version: 0.1
-Status: Active Development
-Owner: Arham Oberoi
+# Purpose
 
-==========================================================
-1. PROJECT OVERVIEW
-==========================================================
+This document is intended exclusively for Large Language Models (LLMs) that continue the development of ArhamOS.
 
-ArhamOS is NOT a chatbot.
+Unlike README.md, this document is not user-facing. It contains engineering context, architectural constraints, development philosophy, and project continuity information required to continue development without prior conversations.
 
-ArhamOS is an AI Operating System whose purpose is to automate complex engineering workflows using Local AI, Browser Automation, Memory, Reports and Future Multi-Agent execution.
+The canonical source of truth is:
 
-The end goal is to build an AI Software Engineer that assists and automates real engineering work while keeping the user in complete control of important actions.
+ENGINEERING_SPEC.md
 
-The first workflow being developed is the LeetCode Workflow.
+This document is a distilled operational context optimized for AI-assisted software engineering.
 
-The philosophy is:
+---
 
-Complete one workflow completely before starting another.
+# Project Identity
 
-Never build isolated agents.
+Project Name
 
-==========================================================
-2. LONG TERM VISION
-==========================================================
+ArhamOS
 
-ArhamOS should eventually automate:
+Current Version
 
-• LeetCode
-• Resume Building
-• Portfolio Updates
-• GitHub Maintenance
-• Project Development
-• Cybersecurity Labs
-• CTF Solving Assistance
-• Research
-• Documentation
-• Second Brain (Obsidian)
-• Personal Knowledge Base
-• Weekly Reports
+v0.3.0-alpha
 
-Everything should reuse the same core infrastructure.
+Project Status
 
-==========================================================
-3. DEVELOPMENT PHILOSOPHY
-==========================================================
+Active Development
 
-This project follows Workflow Driven Development.
+Architecture Status
 
-NOT
+Frozen
 
-LeetCode Agent
-Resume Agent
-Cyber Agent
+Current Sprint
 
-Instead
+Execution Result Parsing
 
-LeetCode Workflow
-Resume Workflow
-Cyber Workflow
+Primary Language
 
-Each workflow is completed end-to-end before another workflow starts.
+Python 3.13
 
-A workflow is considered complete only after the complete automation chain works.
+---
 
-==========================================================
-4. ARCHITECTURE (FROZEN)
-==========================================================
+# Project Summary
 
-Project Structure
+ArhamOS is a modular autonomous AI agent platform designed to execute software engineering workflows through reusable Skills, Tools, Workflows, browser automation, and Large Language Models.
 
-arhamos/
+The project prioritizes execution rather than conversation.
+
+Current production capability:
+
+LeetCode Skill
+
+The browser automation layer has reached feature stability and should not undergo architectural redesign unless a significant limitation is identified.
+
+---
+
+# Engineering Philosophy
+
+Development follows these principles.
+
+Execution over conversation.
+
+Modularity over monolithic design.
+
+Composition over duplication.
+
+Stable interfaces.
+
+Reusable components.
+
+LLM provider independence.
+
+Documentation-first releases.
+
+Recoverability.
+
+Avoid introducing unnecessary abstractions.
+
+---
+
+# Repository Overview
+
+The project is organized into independent modules.
+
+```
+src/arhamos/
+
+core/
 
 config/
-docs/
-scripts/
-tests/
 
-src/
-    arhamos/
-        cli/
-        core/
-        memory/
-        skills/
-        tools/
-        utils/
-        workflows/
+memory/
 
-LLM_CONTEXT.md
-pyproject.toml
+models/
 
-This structure is frozen.
+skills/
 
-Do NOT reorganize folders unless there is a critical technical reason.
+tools/
 
-==========================================================
-5. CORE ARCHITECTURE
-==========================================================
+utils/
+
+workflows/
+```
+
+Each module owns one primary responsibility.
+
+Avoid creating cross-dependencies between modules.
+
+---
+
+# Current Architecture
+
+Execution flow:
+
+```
+User
+
+↓
 
 CLI
 
 ↓
 
-Workflow Engine
+Workflow
 
 ↓
 
-Skills
+Skill
 
 ↓
 
-Tools
+LLM
 
 ↓
-
-Local LLM
-
-↓
-
-Memory
-
-↓
-
-Reports
-
-Every workflow may reuse every skill.
-
-Skills never know who called them.
-
-==========================================================
-6. CURRENT WORKFLOW
-==========================================================
-
-Active Workflow:
-
-LeetCode
-
-Current Pipeline
 
 Browser
 
 ↓
 
-Extract Problem
+Execution
 
 ↓
 
-Generate Solution
+Observation
+```
+
+Browser execution:
+
+```
+Edge
 
 ↓
 
-(Next)
-
-Inject Code
+CDP
 
 ↓
-
-User Reviews
-
-↓
-
-User Clicks Submit
-
-↓
-
-Read Verdict
-
-↓
-
-Generate Report
-
-↓
-
-Store Report
-
-↓
-
-Update Knowledge Base
-
-==========================================================
-7. USER CONTROL POLICY
-==========================================================
-
-The AI must NEVER automatically submit code.
-
-The user always reviews.
-
-The user always presses Submit.
-
-The AI may
-
-Open browser
-
-Extract question
-
-Generate code
-
-Paste code
-
-Read verdict
-
-Generate report
-
-Store learning
-
-But submission remains user controlled.
-
-==========================================================
-8. LOCAL AI
-==========================================================
-
-Model
-
-Qwen3:8B
-
-Runtime
-
-Ollama
-
-No cloud inference is required for the workflow.
-
-The project is designed to work locally.
-
-==========================================================
-9. CURRENT IMPLEMENTATION
-==========================================================
-
-Completed
-
-✓ Python Package
-
-✓ Professional Folder Structure
-
-✓ Virtual Environment
-
-✓ Git Repository
-
-✓ Local Ollama
-
-✓ Qwen Integration
-
-✓ Browser Service
-
-✓ Workflow Engine
-
-✓ LeetCode Browser
-
-✓ Problem Extraction
-
-✓ Local AI Pipeline
-
-Current Browser Library
 
 Playwright
 
-Current Browser Strategy
+↓
 
-Dedicated Automation Browser Profile
-
-Personal browsing remains separate.
-
-==========================================================
-10. CURRENT BLOCKER
-==========================================================
-
-Need to configure a dedicated persistent browser profile for automation.
-
-Chrome profile/login strategy is being implemented.
-
-This must be solved before code injection.
-
-==========================================================
-11. IMMEDIATE NEXT TASK
-==========================================================
-
-Implement Browser Session Manager.
-
-Requirements
-
-Persistent browser profile.
-
-Detect login state.
-
-If not logged in
-
-Allow manual login once.
-
-Reuse session forever.
-
-After this
-
-Implement automatic code injection into LeetCode editor.
-
-==========================================================
-12. FUTURE ROADMAP
-==========================================================
-
-Finish LeetCode Workflow
+BrowserService
 
 ↓
 
-Markdown Report Generator
+LeetCodePage
 
 ↓
 
-Obsidian Integration
+LeetCodeEditor
 
 ↓
 
-Knowledge Base
+ResultReader
+```
 
-↓
+---
 
-Resume Workflow
-
-↓
-
-Project Builder Workflow
-
-↓
-
-Cyber Workflow
-
-==========================================================
-13. CODING STANDARDS
-==========================================================
-
-Use type hints.
-
-Keep functions short.
-
-One responsibility per class.
-
-One feature per commit.
-
-No duplicate logic.
-
-No magic constants.
-
-Prefer composition over inheritance.
-
-Avoid premature optimization.
-
-==========================================================
-14. DEVELOPMENT RULES
-==========================================================
-
-Do NOT redesign architecture.
-
-Do NOT change folder structure.
-
-Do NOT replace Playwright.
-
-Do NOT replace Ollama.
-
-Do NOT introduce cloud dependency unless explicitly requested.
-
-Maintain backward compatibility.
-
-Every new feature should move the current workflow closer to full automation.
-
-==========================================================
-15. DESIGN PRINCIPLES
-==========================================================
-
-Automation over interaction.
-
-Reusable tools.
-
-Reusable workflows.
-
-Minimal coupling.
-
-Maximum modularity.
-
-Local-first.
-
-Privacy-first.
-
-Human remains in control.
-
-==========================================================
-16. CURRENT PROJECT STATUS
-==========================================================
+# Current Implemented Features
 
 Infrastructure
-100%
 
-Browser Foundation
-90%
+- Modular architecture
+- Configuration layer
+- LLM abstraction
+- Workflow orchestration
 
-LeetCode Workflow
-60%
+Browser
 
-Reporting
-0%
+- CDP attachment
+- Persistent authenticated Edge
+- Stable browser lifecycle
+
+LeetCode
+
+- Problem extraction
+- Java language switching
+- Monaco injection
+- Automatic Run
+
+AI
+
+- Prompt generation
+- Java solution generation
+
+Documentation
+
+- Engineering Specification
+- Architecture
+- Decisions
+- State
+- Handoff
+
+---
+
+# Frozen Decisions
+
+The following decisions should not be changed without explicit architectural justification.
+
+- Modular architecture
+- Skills / Tools separation
+- Workflow orchestration
+- Browser automation via CDP
+- Persistent authenticated browser sessions
+- Selector registry
+- LLM abstraction
+- Documentation-first development
+
+---
+
+# Coding Standards
+
+Prefer readability.
+
+Prefer composition.
+
+Avoid unnecessary inheritance.
+
+Avoid tightly coupled modules.
+
+Keep Skills free from browser logic.
+
+Keep Tools deterministic.
+
+Avoid duplicated selectors.
+
+Use:
+
+config/selectors.py
+
+for all browser selectors.
+
+---
+
+# Current Sprint
+
+Execution Result Parsing
+
+Objectives
+
+- Parse execution status
+- Parse runtime
+- Parse passed test cases
+- Create ExecutionResult model
+
+After completion:
+
+SubmissionResult parsing
+
+Automatic submission
+
+Reflection
+
+Self-correction
 
 Memory
-0%
 
-Knowledge Base
-0%
+---
 
-Automation Engine
-30%
+# Known Limitations
 
-Second Brain
-0%
+Current implementation does not yet support:
 
-==========================================================
-17. CONTINUATION PROTOCOL
-==========================================================
+- Submission parsing
+- Autonomous retries
+- Reflection
+- Long-term memory
+- Multi-agent execution
 
-When continuing this project:
+These are expected future milestones.
 
-1. Read this file completely.
+---
 
-2. Do not redesign architecture.
+# Development Workflow
 
-3. Continue from the Immediate Next Task.
+Every feature follows:
 
-4. Finish the active workflow before beginning another.
+Design
 
-5. Never sacrifice stability for new features.
+↓
 
-6. Ask before introducing breaking changes.
+Implement
 
-7. Preserve code quality over speed.
+↓
 
-8. Small commits.
+Test
 
-9. Test every feature.
+↓
 
-10. Maintain production-quality code.
+Freeze
 
-==========================================================
-END OF CONTEXT
-==========================================================
+↓
+
+Document
+
+↓
+
+Commit
+
+↓
+
+Tag
+
+Documentation updates are considered mandatory before release.
+
+---
+
+# Continuation Instructions
+
+When continuing development:
+
+1.
+
+Read:
+
+ENGINEERING_SPEC.md
+
+2.
+
+Review:
+
+HANDOFF.md
+
+3.
+
+Review:
+
+docs/STATE.md
+
+4.
+
+Review:
+
+docs/DECISIONS.md
+
+5.
+
+Continue from:
+
+Current Sprint
+
+Avoid redesigning stabilized architecture.
+
+Prefer extending Skills and Tools rather than modifying existing interfaces.
+
+Update documentation whenever architecture changes.
+
+---
+
+# Immediate Priorities
+
+1.
+
+ExecutionResult parser
+
+2.
+
+SubmissionResult parser
+
+3.
+
+Automatic submission
+
+4.
+
+Self-correction loop
+
+5.
+
+Persistent memory
+
+---
+
+# Long-Term Direction
+
+The platform is intended to evolve into a modular autonomous AI engineering platform supporting multiple Skills including:
+
+LeetCode
+
+GitHub
+
+Documentation
+
+Research
+
+Filesystem
+
+Terminal
+
+Browser
+
+Email
+
+Calendar
+
+Future capabilities should integrate through existing architectural layers rather than bypassing them.
+
+---
+
+# Final Instruction
+
+Treat ENGINEERING_SPEC.md as the canonical engineering specification.
+
+If documentation conflicts arise, ENGINEERING_SPEC.md takes precedence.
+
+When uncertain:
+
+Preserve modularity.
+
+Preserve frozen architecture.
+
+Document architectural changes.
+
+Avoid unnecessary redesign.

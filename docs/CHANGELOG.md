@@ -1,96 +1,128 @@
-# CHANGELOG.md
+# Changelog
 
-All notable changes to ArhamOS are documented here.
+All notable changes to ArhamOS are documented in this file.
 
----
-
-# Version 0.1.0-prealpha
-
-Status: In Development
+The project follows a milestone-driven development process where each tagged version represents a stable engineering checkpoint.
 
 ---
 
-## Project Initialization
+# v0.3.0-alpha
 
-- Initialized Git repository.
-- Configured Python virtual environment.
-- Created professional project structure.
-- Added pyproject.toml.
-- Configured environment variables.
+Status
+
+Current Development Version
 
 ---
 
-## Local AI
+## Added
 
-- Installed Ollama.
-- Downloaded Qwen3:8B.
-- Implemented local LLM client.
-- Verified local inference pipeline.
+### Architecture
 
----
+- Modular project architecture
+- Core / Skills / Tools / Workflows separation
+- Canonical engineering specification
+- Centralized selector registry
 
-## CLI
+### Browser Automation
 
-- Implemented interactive CLI.
-- Added menu system.
-- Connected CLI to workflow engine.
+- Microsoft Edge CDP attachment
+- Persistent authenticated browser sessions
+- BrowserService implementation
+- Stable browser lifecycle
 
----
+### LeetCode Automation
 
-## Workflow Engine
-
-- Introduced Workflow base class.
-- Standardized workflow lifecycle.
-
----
-
-## LeetCode
-
-- Implemented LeetCodeSkill.
-- Implemented LeetCodeWorkflow.
-- Added BrowserService.
-- Added LeetCodeBrowser.
-- Implemented automatic problem extraction.
-- Connected extracted problem to local LLM.
-
----
-
-## Browser Automation
-
-- Integrated Playwright.
-- Created reusable browser abstraction.
-- Began persistent browser session support.
-
----
-
-## Documentation
-
-- Added PROJECT.md
-- Added ARCHITECTURE.md
-- Added STATE.md
-- Added CHANGELOG.md
-- Added LLM_CONTEXT.md
-
----
-
-## Next Release Goals
-
-- Dedicated browser profile
-- Login persistence
+- Automatic problem navigation
+- Problem extraction
+- Monaco editor detection
+- Automatic Java language switching
 - Automatic code injection
-- Verdict extraction
-- Markdown report generation
-- Obsidian integration
+- Automatic Run execution
+
+### AI
+
+- LLM abstraction layer
+- Java solution generation
+- Prompt pipeline
+
+### Documentation
+
+- Engineering Specification
+- Handoff document
+- Architecture documentation
+- Project documentation
+- Engineering decisions
+- Project state tracking
 
 ---
 
-## Release Philosophy
+## Changed
 
-Each release must complete one workflow rather than partially implementing multiple workflows.
+- Browser automation migrated from Playwright-managed browser instances to CDP attachment.
+- DOM selectors centralized into `config/selectors.py`.
+- Browser layer declared architecturally stable.
 
-## LeetCode Automation
+---
 
-- Migrated to workflow-based architecture.
-- Implemented CDP browser attachment.
-- Implemented Monaco editor detection.
-- Implemented automatic Java code injection.
+## Fixed
+
+- Browser authentication failures
+- Session persistence issues
+- Monaco editor injection
+- Automatic Java language selection
+- Selector instability
+- Browser lifecycle management
+
+---
+
+## Current Work
+
+- ExecutionResult parser
+- SubmissionResult parser
+- Structured execution models
+
+---
+
+## Planned
+
+- Automatic submission
+- Self-correction loop
+- Persistent memory
+- GitHub Skill
+- Documentation Skill
+- Research Skill
+- Multi-agent execution
+
+---
+
+# Versioning Strategy
+
+Each release follows:
+
+Design
+
+↓
+
+Implementation
+
+↓
+
+Testing
+
+↓
+
+Documentation
+
+↓
+
+Review
+
+↓
+
+Commit
+
+↓
+
+Tag
+
+Only after all stages are complete is a version considered stable.

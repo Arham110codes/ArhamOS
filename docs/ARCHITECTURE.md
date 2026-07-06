@@ -1,75 +1,342 @@
-# ARCHITECTURE.md
-
-# ArhamOS Architecture
-
-Version: 0.1
-
-Status: Frozen
+# System Architecture
 
 ---
 
 # Purpose
 
-This document defines the technical architecture of ArhamOS.
+This document describes the technical architecture of ArhamOS.
 
-Its purpose is to ensure every contributor (human or AI) understands the system structure and avoids unnecessary architectural changes.
+It explains how the platform is organized, the responsibility of every major subsystem, and the interaction between components during execution.
 
-Unless a critical technical issue exists, the architecture described here must remain unchanged.
+The canonical engineering reference remains:
+
+ENGINEERING_SPEC.md
 
 ---
 
 # High-Level Architecture
 
 ```
-                        User
-                          │
-                          ▼
-                    CLI / Interface
-                          │
-                          ▼
-                  Workflow Engine
-                          │
-        ┌─────────────────┼─────────────────┐
-        ▼                 ▼                 ▼
-     Skills             Tools            Memory
-        │                 │                 │
-        ▼                 ▼                 ▼
-      Local LLM      Browser/File/Git     Reports
+                    User
+                      │
+                      ▼
+                    CLI
+                      │
+                      ▼
+                 Workflows
+                /         \
+               ▼           ▼
+          Skills         Tools
+               │           │
+               ▼           ▼
+             LLM      Browser/API
+               │           │
+               └─────┬─────┘
+                     ▼
+               External Systems
 ```
 
 ---
 
-# Layer Responsibilities
+# Repository Layout
 
-## 1. CLI
+```
+ArhamOS/
 
-Responsible only for interacting with the user.
+README.md
+ENGINEERING_SPEC.md
+HANDOFF.md
+LLM_CONTEXT.md
 
-Must never contain business logic.
+docs/
 
-Examples:
+scripts/
 
-- Display menu
-- Read user input
-- Trigger workflows
+src/
+    arhamos/
+        core/
+        config/
+        memory/
+        models/
+        skills/
+        tools/
+        utils/
+        workflows/
+
+tests/
+
+user_data/
+```
 
 ---
 
-## 2. Workflow Engine
+# Architectural Principles
 
-Coordinates complete workflows.
+The architecture follows these principles:
 
-A workflow may use multiple skills and multiple tools.
+- Separation of concerns
+- Single responsibility
+- Composition over inheritance
+- Reusable modules
+- LLM independence
+- Browser abstraction
+- Workflow orchestration
 
-Workflows own the execution sequence.
+---
 
-Example:
+# Core Layer
 
-LeetCode Workflow
+Purpose
+
+Provides shared infrastructure used throughout the platform.
+
+Responsibilities
+
+- LLM abstraction
+- Shared interfaces
+- Global services
+
+Future
+
+- Provider routing
+- Cost tracking
+- Model benchmarking
+
+---
+
+# Config Layer
+
+Purpose
+
+Centralized configuration.
+
+Responsibilities
+
+- Selectors
+- Constants
+- Environment configuration
+
+Current
+
+```
+selectors.py
+```
+
+Future
+
+Additional configuration modules.
+
+---
+
+# Models Layer
+
+Purpose
+
+Contains data models shared throughout the platform.
+
+Examples
+
+- ExecutionResult
+- SubmissionResult
+
+Responsibilities
+
+- Structured outputs
+- Shared schemas
+- Type safety
+
+---
+
+# Memory Layer
+
+Status
+
+Foundation created.
+
+Purpose
+
+Persistent storage of execution context.
+
+Future
+
+- Long-term memory
+- Session memory
+- Vector retrieval
+- Skill history
+
+---
+
+# Skills Layer
+
+Purpose
+
+Skills define high-level capabilities.
+
+Current
+
+LeetCode Skill
+
+Future
+
+GitHub Skill
+
+Documentation Skill
+
+Research Skill
+
+Terminal Skill
+
+Email Skill
+
+Calendar Skill
+
+Filesystem Skill
+
+---
+
+# Tools Layer
+
+Purpose
+
+Reusable implementations.
+
+Current
+
+BrowserService
+
+LeetCodePage
+
+LeetCodeEditor
+
+ResultReader
+
+Responsibilities
+
+- Browser interaction
+- Parsing
+- Navigation
+- Execution
+
+Tools never perform reasoning.
+
+---
+
+# Workflow Layer
+
+Purpose
+
+Coordinates complete execution.
+
+Responsibilities
+
+- Receive user intent
+- Call skills
+- Call tools
+- Return structured output
+
+Current Workflow
+
+```
+User
+
+↓
+
+Workflow
+
+↓
+
+Skill
+
+↓
+
+LLM
 
 ↓
 
 Browser
+
+↓
+
+Execution
+
+↓
+
+Observation
+```
+
+---
+
+# Browser Automation Layer
+
+Technology
+
+Microsoft Edge
+
+Playwright
+
+Chrome DevTools Protocol
+
+Responsibilities
+
+- Browser connection
+- Navigation
+- Problem extraction
+- Language switching
+- Monaco injection
+- Execution
+
+Current Status
+
+Stable
+
+Frozen
+
+---
+
+# LLM Layer
+
+Responsibilities
+
+- Prompt construction
+- Solution generation
+- Reasoning
+
+Current
+
+Java solution generation.
+
+Future
+
+Reflection
+
+Self-correction
+
+Multiple providers
+
+Agent collaboration
+
+---
+
+# Current Execution Pipeline
+
+```
+User
+
+↓
+
+CLI
+
+↓
+
+Workflow
+
+↓
+
+Browser
+
+↓
+
+LeetCode
 
 ↓
 
@@ -81,214 +348,83 @@ LLM
 
 ↓
 
+Java Solution
+
+↓
+
+Language Selection
+
+↓
+
 Code Injection
 
 ↓
 
-Verdict
+Run
 
 ↓
 
-Report
-
----
-
-## 3. Skills
-
-Skills perform one specialized task.
-
-Examples:
-
-- LeetCode Solver
-- Resume Writer
-- Code Explainer
-- Project Planner
-
-Skills never interact directly with the user.
-
-Skills do not know who called them.
-
----
-
-## 4. Tools
-
-Tools provide access to external systems.
-
-Examples:
-
-- Browser (Playwright)
-- File System
-- Git
-- Terminal
-- Obsidian
-- Future APIs
-
-Tools contain no AI logic.
-
----
-
-## 5. Core
-
-Core contains reusable infrastructure.
-
-Examples:
-
-- Configuration
-- LLM Client
-- Prompt Loader (future)
-- Logging (future)
-
----
-
-## 6. Memory
-
-Persistent project memory.
-
-Future responsibilities:
-
-- Learning history
-- Knowledge base
-- Embeddings
-- Vector database
-
----
-
-# Current Folder Structure
-
-```
-arhamos/
-
-config/
-docs/
-scripts/
-tests/
-
-src/
-└── arhamos/
-    ├── cli/
-    ├── core/
-    ├── memory/
-    ├── skills/
-    ├── tools/
-    ├── utils/
-    ├── workflows/
-    ├── __init__.py
-    └── main.py
-
-LLM_CONTEXT.md
-README.md
-pyproject.toml
+Execution Result
 ```
 
-This structure is frozen.
+---
+
+# Current State
+
+Completed
+
+- Browser automation
+- CDP integration
+- Selector registry
+- Problem extraction
+- Java generation
+- Monaco injection
+- Automatic Run
+
+In Progress
+
+Execution parser
+
+Submission parser
+
+Future
+
+Autonomous retries
+
+Memory
+
+Multi-agent reasoning
 
 ---
 
-# Dependency Rules
+# Engineering Rules
 
-Allowed
+Every subsystem follows:
 
-Workflow
-→ Skills
+Design
 
-Workflow
-→ Tools
+↓
 
-Skills
-→ Core
+Implement
 
-Tools
-→ Core
+↓
 
-CLI
-→ Workflow
+Test
 
-Forbidden
+↓
 
-Skill
-→ CLI
+Freeze
 
-Tool
-→ Workflow
+↓
 
-Workflow
-→ CLI
+Document
 
-Skill
-→ Skill (unless absolutely necessary)
+↓
 
----
+Commit
 
-# Browser Strategy
+↓
 
-Browser automation uses Playwright.
+Tag
 
-A dedicated automation browser profile will be maintained.
-
-Personal browsing profiles must remain untouched.
-
-The browser is shared across workflows.
-
----
-
-# AI Strategy
-
-Primary Runtime
-
-- Ollama
-
-Primary Model
-
-- Qwen3:8B
-
-Cloud models may be added later but must never become mandatory.
-
-The project should continue functioning offline.
-
----
-
-# User Control Policy
-
-The system may:
-
-- Open browsers
-- Read web pages
-- Generate code
-- Generate reports
-- Read verdicts
-
-The system must not:
-
-- Submit code automatically
-- Perform irreversible actions without user approval
-
-Human approval is mandatory before critical actions.
-
----
-
-# Engineering Standards
-
-- Type hints where practical.
-- Single Responsibility Principle.
-- Small commits.
-- Modular code.
-- Reusable components.
-- No duplicated business logic.
-- Prefer composition over inheritance.
-- Minimize coupling.
-
----
-
-# Frozen Decisions
-
-The following decisions are frozen:
-
-- Folder structure
-- Workflow-first development
-- Playwright as browser framework
-- Ollama as local inference engine
-- Local-first philosophy
-- Human approval before submissions
-- One workflow completed before starting another
-
-Future contributors should extend this architecture rather than redesign it.
+Architecture changes should be rare and supported by documented engineering decisions.

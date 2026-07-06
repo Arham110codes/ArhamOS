@@ -1,178 +1,210 @@
-# PROJECT.md
-
-# ArhamOS
-
-Version: Pre-Alpha (v0.1)
-
-Author: Arham Oberoi
+# Project Specification
 
 ---
 
-# Vision
+# Project Name
 
-ArhamOS is a local-first AI Operating System designed to automate software engineering workflows while keeping the human in complete control of critical decisions.
+**ArhamOS**
 
-It is not a chatbot, nor a single AI agent. It is a modular automation platform that combines local language models, browser automation, reusable workflows, persistent memory, reporting, and future multi-agent collaboration into one cohesive system.
+---
 
-The objective is to eliminate repetitive engineering work while improving learning, productivity, and software quality.
+# Project Overview
+
+ArhamOS is a modular autonomous AI agent platform designed to execute complex engineering workflows by combining Large Language Models (LLMs), browser automation, reusable tools, modular skills, and workflow orchestration.
+
+The project emphasizes execution rather than conversation. Every capability is implemented as an independent module that can be composed into larger autonomous workflows.
+
+The first production-ready implementation of the platform is the LeetCode Skill, which demonstrates end-to-end autonomous interaction with a real-world software platform.
 
 ---
 
 # Mission
 
-Build an extensible AI platform capable of automating real engineering workflows such as:
-
-- LeetCode Preparation
-- Resume Building
-- Portfolio Maintenance
-- Project Development
-- Cybersecurity Practice
-- Research
-- Documentation
-- Personal Knowledge Management
-
-Each workflow must be production-quality before introducing the next.
+Build a reusable AI platform capable of reasoning, interacting with software systems, executing multi-step workflows, observing outcomes, and continuously expanding through modular skills.
 
 ---
 
-# Core Philosophy
+# Vision
 
-ArhamOS follows Workflow-Driven Development.
+Transform ArhamOS into a general-purpose autonomous engineering platform capable of assisting with software engineering, research, documentation, browser automation, development workflows, and future multi-agent collaboration.
 
-We do not build isolated AI agents.
-
-Instead, we build complete workflows.
-
-Example:
-
-LeetCode Workflow
-
-Start Session
-
-↓
-
-Open Browser
-
-↓
-
-Extract Problem
-
-↓
-
-Generate Solution
-
-↓
-
-Inject Code
-
-↓
-
-User Reviews
-
-↓
-
-User Submits
-
-↓
-
-Read Verdict
-
-↓
-
-Generate Report
-
-↓
-
-Store Knowledge
-
-↓
-
-Recommend Next Revision
-
-Only after an entire workflow reaches production quality does development begin on another workflow.
+LeetCode automation serves as the first production-ready capability and architectural proof of concept rather than the project's final objective.
 
 ---
 
-# Guiding Principles
+# Objectives
 
-- Local-first wherever possible.
-- Human remains in control.
-- Modular architecture.
+## Primary
+
+- Build reusable engineering components.
+- Maintain a modular architecture.
+- Support interchangeable LLM providers.
+- Execute software tasks autonomously.
+- Minimize coupling between subsystems.
+
+---
+
+## Secondary
+
+- Support persistent memory.
+- Support multiple autonomous skills.
+- Enable browser automation.
+- Enable future agent collaboration.
+- Maintain comprehensive documentation.
+
+---
+
+# Scope
+
+Current scope includes:
+
+- Browser automation
+- LeetCode interaction
+- LLM integration
+- Code generation
+- Workflow execution
+
+Future scope includes:
+
+- GitHub automation
+- Documentation generation
+- Research assistants
+- Terminal automation
+- File system automation
+- Calendar integration
+- Email automation
+- Multi-agent orchestration
+
+---
+
+# Core Principles
+
+- Execution over conversation.
+- Modularity over monolithic design.
+- Stable architecture over rapid iteration.
 - Reusable components.
-- Privacy by design.
-- Production-quality engineering.
-- Incremental development.
-- One feature per commit.
-- Complete workflows before expanding scope.
+- Separation of concerns.
+- Documentation-first development.
 
 ---
 
-# Long-Term Roadmap
+# Platform Architecture
 
-Phase 1
+ArhamOS is divided into independent engineering layers.
 
-LeetCode Automation
+```
+CLI
 
-Phase 2
+↓
 
-Knowledge Base & Second Brain
+Workflow
 
-Phase 3
+↓
 
-Resume & Portfolio Automation
+Skills
 
-Phase 4
+↓
 
-Project Builder
+Tools
 
-Phase 5
+↓
 
-Cybersecurity Automation
+External Systems
+```
 
-Phase 6
-
-Multi-Agent Collaboration
-
----
-
-# Non-Goals
-
-ArhamOS is not intended to:
-
-- Replace software engineers.
-- Automatically perform irreversible actions without user approval.
-- Depend entirely on cloud-hosted AI.
-- Become another conversational chatbot.
+Each layer owns a single responsibility.
 
 ---
 
-# Definition of Success
+# Current Capabilities
 
-A successful workflow should:
+## Browser
 
-- Reduce repetitive work.
-- Improve engineering quality.
-- Produce reusable artifacts.
-- Be maintainable.
-- Be extensible.
-- Require minimal manual effort while preserving user control.
+- CDP browser attachment
+- Edge session reuse
+- Browser persistence
 
----
+## LeetCode
 
-# Current Status
+- Navigation
+- Problem extraction
+- Language switching
+- Monaco editor integration
+- Code injection
+- Automatic Run
 
-Current Active Workflow:
+## AI
 
-LeetCode Automation
-
-Current Development Phase:
-
-Infrastructure complete.
-
-Workflow automation in progress.
+- LLM abstraction
+- Java solution generation
 
 ---
 
-This document defines the purpose and direction of ArhamOS.
+# Current Limitations
 
-It should change only when the long-term vision changes.
+The following capabilities are still under development.
+
+- Execution result parsing
+- Submission parsing
+- Self-correction
+- Long-term memory
+- Multi-agent collaboration
+
+---
+
+# Milestones
+
+## Completed
+
+- Modular architecture
+- Browser automation
+- Stable CDP integration
+- Problem extraction
+- Java generation
+- Automatic execution
+
+## Current
+
+Execution Result Parsing
+
+## Upcoming
+
+- Submission parsing
+- Autonomous retries
+- Memory integration
+- GitHub Skill
+- Research Skill
+
+---
+
+# Success Criteria
+
+The project will be considered successful when new autonomous capabilities can be added by implementing independent Skills without modifying the platform core.
+
+---
+
+# Intended Audience
+
+ArhamOS is intended for:
+
+- Software Engineers
+- AI Engineers
+- Students
+- Researchers
+- Open Source Contributors
+
+---
+
+# References
+
+The canonical engineering reference is:
+
+```
+ENGINEERING_SPEC.md
+```
+
+Operational project status is maintained in:
+
+```
+HANDOFF.md
+```
